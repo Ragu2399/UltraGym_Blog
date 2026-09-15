@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra GYM - MICCAI 2024</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .conference {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .authors {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .affiliations {
+            font-size: 0.9rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #2563eb;
+        }
+
+        /* Sections */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Abstract */
+        .abstract-content {
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .abstract-content p {
+            margin-bottom: 1rem;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.75rem;
+            color: #2563eb;
+        }
+
+        /* Results */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .result-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .result-card h3 {
+            color: #2563eb;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .result-metric {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0.75rem;
+            color: white;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Citation */
+        .citation-box {
+            background: #f9fafb;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .citation-box pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">Ultra GYM</div>
+            <ul class="nav-links">
+                <li><a href="#abstract">Abstract</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#citation">Citation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <h1>Ultra GYM: Transforming Clinical 3D Ultrasound Volumes into Dynamic, Multi-Task Training Data</h1>
+            <p class="conference">MICCAI 2024</p>
+            
+            <div class="authors">
+                <span>Ragu B<sup>1,2</sup></span>,
+                <span>Sowjanya Balaji<sup>1,2⋆</sup></span>,
+                <span>Returaj Burnwal<sup>3</sup></span>,
+                <span>Shyam Ayyasamy<sup>2</sup></span>,
+                <span>Suresh Seshadri<sup>4</sup></span>,
+                <span>Manojkumar Lakshmanan<sup>2</sup></span>,
+                <span>Mohanasankar Sivaprakasam<sup>1,2</sup></span>
+            </div>
+            
+            <div class="affiliations">
+                <p><sup>1</sup>Department of Electrical Engineering, IIT Madras, India</p>
+                <p><sup>2</sup>Healthcare Technology Innovation Centre (HTIC), IIT Madras, India</p>
+                <p><sup>3</sup>Wadhwani School of Data Science & AI, IIT Madras, India</p>
+                <p><sup>4</sup>MediScan Systems, Chennai, India</p>
+                <p><sup>⋆</sup>Equal contribution</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#" class="btn btn-primary"> Paper</a>
+                <a href="#" class="btn btn-secondary">📊 Poster</a>
+                <a href="https://igrs.hticlab.org/htic-home" class="btn btn-secondary" target="_blank">🔗 Project Page</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Abstract Section -->
+    <section id="abstract" class="section">
+        <div class="container">
+            <h2>Abstract</h2>
+            <div class="abstract-content">
+                <p>
+                    Three-dimensional (3D) ultrasound (US) volumes offer rich, comprehensive anatomical information, 
+                    yet they remain heavily under-utilized in medical AI development. This underutilization stems from 
+                    a lack of dedicated data-engineering frameworks capable of converting static, archived volumes into 
+                    interactive, multi-task training data.
+                </p>
+                <p>
+                    Existing methods commonly rely on cross-modality synthesis of ultrasound images from CT or MRI data. 
+                    This practice introduces simulation-to-real domain gaps and fails to preserve native ultrasound-specific 
+                    acoustic artifacts.
+                </p>
+                <p>
+                    To address these limitations, we present <strong>Ultra GYM</strong>, a framework that transforms 
+                    static 3D ultrasound archives into dynamic, interactive training environments. By operating directly on clinical 
+                    3D volumes, our platform preserves native acoustic properties and eliminates cross-modality domain shifts.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="section">
+        <div class="container">
+            <h2>Key Contributions</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🎯 Native Acoustic Fidelity</h3>
+                    <p>Direct clinical-volume slicing preserves ultrasound-specific physics and eliminates cross-modality domain gaps</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Multi-Task Data Generation</h3>
+                    <p>Generate diverse training data for multiple tasks from a single clinical archive</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🧩 Modular Framework</h3>
+                    <p>Easily extensible architecture for broader medical imaging pipelines</p>
+                </div>
+                <div class="feature-card">
+                    <h3> Open Source</h3>
+                    <p>Publicly available dataset, code, and videos for the research community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="section">
+        <div class="container">
+            <h2>Results</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Standard Plane Detection</h3>
+                    <div class="result-metric">
+                        <span class="metric-value">79.47%</span>
+                        <span class="metric-label">Overall Accuracy</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <p><strong>Standard Plane:</strong> 83.93%</p>
+                        <p><strong>Non-Standard Plane:</strong> 71.29%</p>
+                        <p><strong>F1-Score:</strong> 80.20% ± 9.04</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>3D Reconstruction</h3>
+                    <div class="result-metric">
+                        <span class="metric-value">0.12 mm</span>
+                        <span class="metric-label">Local PDE (DCL-Net)</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <p><strong>Pairwise CNN:</strong> 0.14 mm</p>
+                        <p><strong>Range:</strong> 0.03 – 0.27 mm</p>
+                        <p><strong>Final Drift:</strong> 8.47 mm avg</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Autonomous Navigation</h3>
+                    <div class="result-metric">
+                        <span class="metric-value">84%</span>
+                        <span class="metric-label">Success Rate</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <p><strong>Average Episode:</strong> 78 ± 13 steps</p>
+                        <p><strong>Stable convergence</strong></p>
+                        <p><strong>Progressive optimization</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Section -->
+    <section id="citation" class="section">
+        <div class="container">
+            <h2>Citation</h2>
+            <p>If you find this work useful, please consider citing:</p>
+            
+            <div class="citation-box">
+                <pre><code>@inproceedings{ragu2024ultragym,
+  title={Ultra GYM: Transforming Clinical 3D Ultrasound Volumes into Dynamic, Multi-Task Training Data},
+  author={Ragu, B and Balaji, Sowjanya and Burnwal, Returaj and Ayyasamy, Shyam and Seshadri, Suresh and Lakshmanan, Manojkumar and Sivaprakasam, Mohanasankar},
+  booktitle={Medical Image Computing and Computer Assisted Intervention (MICCAI)},
+  year={2024}
+}</code></pre>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <p><strong>Contact:</strong> 
+                    <a href="mailto:ragu.b@htic.iitm.ac.in">ragu.b@htic.iitm.ac.in</a>, 
+                    <a href="mailto:sowjanya@htic.iitm.ac.in">sowjanya@htic.iitm.ac.in</a>
+                </p>
+                <p><strong>Project Page:</strong> <a href="https://igrs.hticlab.org/htic-home" target="_blank">https://igrs.hticlab.org/htic-home</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Ultra GYM Team. Healthcare Technology Innovation Centre (HTIC), IIT Madras.</p>
+        </div>
+    </footer>
+</body>
+</html>

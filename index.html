@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra GYM - MICCAI 2024</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fallback styles in case CSS file doesn't load -->
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; margin: 0; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 2rem; text-align: center; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+        .btn { display: inline-block; padding: 10px 20px; background: white; color: #667eea; text-decoration: none; border-radius: 5px; margin: 5px; font-weight: bold; }
+        .section { padding: 4rem 0; }
+        .img-box { text-align: center; margin: 2rem 0; }
+        .main-img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .caption { text-align: center; color: #6b7280; font-style: italic; margin-top: 1rem; font-size: 0.95rem; }
+        h2 { font-size: 2rem; color: #1f2937; text-align: center; margin-bottom: 2rem; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .card { background: #f9fafb; padding: 1.5rem; border-radius: 8px; border: 1px solid #e5e7eb; }
+        @media (max-width: 768px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <h1>Ultra GYM: Transforming Clinical 3D Ultrasound Volumes into Dynamic, Multi-Task Training Data</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">MICCAI 2024</p>
+            
+            <p style="margin-bottom: 1rem;">
+                Ragu B<sup>1,2</sup>, Sowjanya Balaji<sup>1,2⋆</sup>, Returaj Burnwal<sup>3</sup>, Shyam Ayyasamy<sup>2</sup>, 
+                Suresh Seshadri<sup>4</sup>, Manojkumar Lakshmanan<sup>2</sup>, Mohanasankar Sivaprakasam<sup>1,2</sup>
+            </p>
+            
+            <div style="margin-top: 2rem;">
+                <a href="#" class="btn">📄 Paper</a>
+                <a href="#" class="btn">📊 Poster</a>
+                <a href="https://igrs.hticlab.org/htic-home" class="btn" target="_blank">🔗 IGRS </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Abstract -->
+    <section class="section">
+        <div class="container">
+            <h2>Abstract</h2>
+            <p style="max-width: 900px; margin: 0 auto; font-size: 1.1rem; text-align: center; color: #4b5563;">
+                Three-dimensional (3D) ultrasound (US) volumes offer rich, comprehensive anatomical information, yet they remain heavily underutilized in medical AI development. This underutilization stems from a lack of dedicated data-engineering frameworks capable of converting static, archived volumes into interactive, multi-task training data. Existing methods commonly rely on cross-modality synthesis of ultrasound images from CT or MRI data. This practice introduces simulation-to-real domain gaps and fails to preserve native ultrasound-specific acoustic artifacts. Furthermore, alternative approaches are generally restricted to isolated, single-task applications. To address these data-engineering limitations, we present Ultra GYM, a framework that transforms static 3D ultrasound archives into dynamic, interactive training environments. By operating directly on clinical 3D volumes, our platform preserves native acoustic properties and eliminates cross-modality domain shifts. Ultra GYM provides a modular data-engineering framework designed to easily extend to broader medical imaging pipelines. To showcase this multi-task scaling capability, we configure the framework to automatically generate specialized data structures for three highly distinct downstream tasks: (1) temporal video sweeps for standard plane detection, (2) exact six-degree-of-freedom tracking coordinates for 2D to 3D US reconstruction, and (3) an efficient reinforcement learning environment for autonomous Standard Plane detection. Across downstream evaluations, Models trained via the framework achieved 79.47% overall accuracy in standard plane detection, an 84% success rate in autonomous localization, and a local pose reconstruction error of about 0.12mm. These results demonstrate that Ultra GYM serves as an effective integrated framework, extracting diverse, multi-task training trajectories from limited clinical archives to accelerate medical AI deployment. The dataset, code, and videos will be made publicly available upon publication.
+            </p>
+        </div>
+    </section>
+
+    <!-- Framework Overview (Poster Image & Fig 1) -->
+    <section class="section" style="background: #f9fafb;">
+        <div class="container">
+            <h2>Framework Overview</h2>
+            <p style="text-align: center; color: #6b7280; margin-bottom: 2rem;">One clinical volume → 3 training-ready outputs</p>
+            
+            <div class="img-box">
+                <img src="images/poster_overview.png" alt="Ultra GYM 3-Task Overview" class="main-img" onerror="this.style.display='none'">
+                <p class="caption">Fig A: Ultra GYM transforms a single 3D US Volume into an Interactive Gym Environment, generating data for Standard Plane Detection, 3D Reconstruction, and Autonomous Navigation.</p>
+            </div>
+
+            <div class="img-box">
+                <img src="images/fig1_pipeline.png" alt="Ultra GYM Pipeline" class="main-img" onerror="this.style.display='none'">
+                <p class="caption">Fig 1: ULTRA-GYM pipeline overview. A 3D ultrasound volume undergoes volumetric slice rendering, anatomically constrained SE(3) probe motion, and dense trajectory annotation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology (Fig 2)
+    <section class="section">
+        <div class="container">
+            <h2>Physics-Aware Dynamic Noise</h2>
+            <div class="img-box">
+                <img src="images/fig2_noise.png" alt="Noise Formulation Pipeline" class="main-img" onerror="this.style.display='none'">
+                <p class="caption">Fig 2: Pipeline of Ultra GYM. A 3D clinical volume is sampled along simulated probe trajectories, augmented using a physics-aware dynamic noise model to reproduce realistic temporal ultrasound appearance and speckle dynamics.</p>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Results & Tasks -->
+    <section class="section" style="background: #f9fafb;">
+        <div class="container">
+            <h2>Downstream Tasks & Results</h2>
+            
+            <!-- Task 1 -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="color: #2563eb; text-align: center;">1. Standard Plane Detection</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">Models trained via the framework achieved <strong>79.47% overall accuracy</strong>.</p>
+                <div class="grid-2">
+                    <div>
+                        <h4>Key Results:</h4>
+                        <ul style="padding-left: 1.5rem; color: #4b5563;">
+                            <li><strong>Standard Plane Accuracy:</strong> 83.93%</li>
+                            <li><strong>Non-Standard Plane Accuracy:</strong> 71.29%</li>
+                            <li><strong>F1-Score (Balanced):</strong> 80.20% (Improved by +41.80% over unbalanced)</li>
+                        </ul>
+                    </div>
+                    <div class="img-box" style="margin: 0;">
+                        <img src="images/fig3_seg.png" alt="Segmentation Verification" class="main-img" style="max-height: 250px;" onerror="this.style.display='none'">
+                        <p class="caption" style="font-size: 0.8rem;">Fig 3: Anatomical verification using semantic segmentation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 2 -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="color: #2563eb; text-align: center;">2. 3D Ultrasound Reconstruction</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">Achieved sub-millimetre local reconstruction accuracy without external tracking hardware.</p>
+                <div class="grid-2">
+                    <div>
+                        <h4>Reconstruction Metrics:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+                            <tr style="background: #e5e7eb;"><th style="padding: 8px; text-align: left;">Method</th><th style="padding: 8px;">Local PDE Avg (mm)</th><th style="padding: 8px;">Final Drift Avg (mm)</th></tr>
+                            <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">Pairwise CNN</td><td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: center;">0.14</td><td style="padding: 8px; border-bottom: 1px solid #ddd; text-align: center;">10.80</td></tr>
+                            <tr><td style="padding: 8px;">DCL-Net Baseline</td><td style="padding: 8px; text-align: center;">0.12</td><td style="padding: 8px; text-align: center;">8.47</td></tr>
+                        </table>
+                    </div>
+                    <div class="img-box" style="margin: 0;">
+                        <img src="images/various_motions.png" alt="Trajectory Sequence" class="main-img" style="max-height: 250px;" onerror="this.style.display='none'">
+                        <p class="caption" style="font-size: 0.8rem;">Fig B: Sequential probe movements with segmentation overlay (TC 80% confidence).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 3 -->
+            <div class="card">
+                <h3 style="color: #2563eb; text-align: center;">3. Autonomous Navigation</h3>
+                <p style="text-align: center; margin-bottom: 1rem;">Formulated as an MDP for goal-directed probe navigation, achieving an <strong>84% success rate</strong>.</p>
+                <div class="grid-2">
+                    <div class="img-box" style="margin: 0;">
+                        <img src="images/fig4_rl.png" alt="RL Training Metrics" class="main-img" style="max-height: 250px;" onerror="this.style.display='none'">
+                        <p class="caption" style="font-size: 0.8rem;">Fig 4: Navigation training metrics showing rising episodic rewards and decreasing step counts.</p>
+                    </div>
+                    <div>
+                        <h4>Agent Performance:</h4>
+                        <ul style="padding-left: 1.5rem; color: #4b5563;">
+                            <li><strong>Navigation Success Rate:</strong> 84%</li>
+                            <li><strong>Average Episode Length:</strong> 78 ± 13 Steps</li>
+                            <li>Policy exhibits stable convergence and progressive path optimization.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation
+    <section class="section">
+        <div class="container">
+            <h2>Citation</h2>
+            <div style="background: #f3f4f6; padding: 2rem; border-radius: 8px; text-align: center; max-width: 800px; margin: 0 auto;">
+                <pre style="text-align: left; overflow-x: auto; font-family: monospace; font-size: 0.9rem;"><code>@inproceedings{ragu2024ultragym,
+  title={Ultra GYM: Transforming Clinical 3D Ultrasound Volumes into Dynamic, Multi-Task Training Data},
+  author={Ragu, B and Balaji, Sowjanya and Burnwal, Returaj and Ayyasamy, Shyam and Seshadri, Suresh and Lakshmanan, Manojkumar and Sivaprakasam, Mohanasankar},
+  booktitle={Medical Image Computing and Computer Assisted Intervention (MICCAI)},
+  year={2024}
+}</code></pre>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Footer -->
+    <footer style="background: #1f2937; color: white; text-align: center; padding: 2rem;">
+        <div class="container">
+            <p>&copy; 2024 Ultra GYM Team. Healthcare Technology Innovation Centre (HTIC), IIT Madras.</p>
+            <p>Contact: <a href="mailto:ragu.b@htic.iitm.ac.in" style="color: #60a5fa;">ragu.b@htic.iitm.ac.in</a> | <a href="mailto:sowjanya@htic.iitm.ac.in" style="color: #60a5fa;">sowjanya@htic.iitm.ac.in</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
